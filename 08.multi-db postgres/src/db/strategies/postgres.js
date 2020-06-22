@@ -9,6 +9,16 @@ class Postgres extends ICrud {
         this._connect()
     }
 
+    async isConnected(){
+        try {
+            await this._driver.authenticate()
+            return true
+        } catch (error) {
+            console.log('fail!', error)
+            return false;
+        }
+    }
+
     defineModel() {
         this._herois = driver.define('heroes', {
             id: {
