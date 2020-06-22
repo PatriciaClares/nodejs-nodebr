@@ -6,7 +6,6 @@ class Postgres extends ICrud {
         super()
         this._driver = null
         this._herois = null
-        this._connect()
     }
 
     async isConnected(){
@@ -47,7 +46,7 @@ class Postgres extends ICrud {
         return this._herois.create(item)
     }
 
-    _connect() {
+    async connect() {
         this._driver = new Sequelize(
             'heroes',
             'patriciaClares',
@@ -58,6 +57,7 @@ class Postgres extends ICrud {
                 quoteIdentifiers: false,
             }
         )
+        await this.defineModel()
     }
 }
 
