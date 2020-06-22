@@ -19,7 +19,7 @@ class Postgres extends ICrud {
         }
     }
 
-    defineModel() {
+    async defineModel() {
         this._herois = driver.define('heroes', {
             id: {
                 type: Sequelize.INTEGER,
