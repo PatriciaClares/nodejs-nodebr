@@ -10,6 +10,7 @@ const STATUS = {
 class MongoDB extends ICrud{
     constructor(){
         super()
+        this._herois = null
     }
 
     async isConnected() {
@@ -21,6 +22,23 @@ class MongoDB extends ICrud{
         await new Promise(resolve => setTimeout(resolve, 1000))
 
         return STATUS[Mongoose.connection.readyState]
+    }
+
+    defineModel() {
+        this._herois = new Mongoose.Schema({
+            nome: {
+                type: String,
+                required: true
+            },
+            poder: {
+                type: String,
+                required: true
+            },
+            insertedAt: {
+                type: Date,
+                default: new Date()
+            }
+        })
     }
 
     connect() {
