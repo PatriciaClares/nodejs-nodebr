@@ -54,7 +54,7 @@ class MongoDB extends ICrud{
         connection.once('open', () => console.log('database rodando!!') )
     }
 
-    create(item){
+    async create(item){
         const resultCadastrar = await model.create({
             nome: 'Batman',
             poder: 'Dinheiro'
