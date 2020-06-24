@@ -26,7 +26,6 @@ class MongoDB extends ICrud{
     }
 
     static connect() {
-        console.log('entrei')
         Mongoose.connect('mongodb://admin:senhaadmin@localhost:27017/admin', { 
             useUnifiedTopology: true,
             useNewUrlParser: true
