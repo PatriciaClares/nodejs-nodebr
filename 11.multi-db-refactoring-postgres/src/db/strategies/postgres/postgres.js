@@ -1,6 +1,5 @@
 const ICrud = require('../interfaces/interfaceCrud')
 const Sequelize = require('sequelize')
-const { connection } = require('mongoose')
 
 class Postgres extends ICrud {
     constructor(connection, schema){
@@ -53,6 +52,7 @@ class Postgres extends ICrud {
                 host:'localhost',
                 dialect: 'postgres',
                 quoteIdentifiers: false,
+                logging: false
             }
         )
         return connection
