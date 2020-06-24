@@ -1,5 +1,6 @@
 const ICrud = require('../interfaces/interfaceCrud')
 const Sequelize = require('sequelize')
+const { connection } = require('mongoose')
 
 class Postgres extends ICrud {
     constructor(connection, schema){
@@ -18,28 +19,10 @@ class Postgres extends ICrud {
         }
     }
 
-    async defineModel() {
-        this._schema = this._connection.define('heroes', {
-            id: {
-                type: Sequelize.INTEGER,
-                required: true,
-                primaryKey: true,
-                autoIncrement: true,
-            },
-            nome: {
-                type: Sequelize.STRING,
-                required: true
-            },
-            poder: {
-                type: Sequelize.STRING,
-                required: true
-            }
-        }, {
-                tableName: 'TB_HEROIS',
-                freezeTableName: false,
-                timestamps: false
-        })
+    async defineModel(connection, schema) {
+        const model = connection.define(schema.name, schema.schema, schema.options)
         await this._schema.sync()
+        return model
     }
 
     async create(item){
