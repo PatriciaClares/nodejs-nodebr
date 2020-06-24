@@ -26,7 +26,7 @@ class MongoDB extends ICrud{
     }
 
     defineModel() {
-        heroiSchema = new Mongoose.Schema({
+        const heroiSchema = new Mongoose.Schema({
             nome: {
                 type: String,
                 required: true
@@ -53,6 +53,7 @@ class MongoDB extends ICrud{
         })
 
         this._driver = Mongoose.connection
+        this.defineModel()
     }
 
     async create(item){
