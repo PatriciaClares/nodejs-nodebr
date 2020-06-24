@@ -44,8 +44,8 @@ class Postgres extends ICrud {
         return this._schema.destroy({where: query})
     }
     
-    async connect() {
-        this._connection = new Sequelize(
+    static async connect() {
+        const connection = new Sequelize(
             'heroes',
             'patriciaClares',
             'minhasenhasecreta', 
@@ -55,7 +55,7 @@ class Postgres extends ICrud {
                 quoteIdentifiers: false,
             }
         )
-        await this.defineModel()
+        return connection
     }
 }
 
