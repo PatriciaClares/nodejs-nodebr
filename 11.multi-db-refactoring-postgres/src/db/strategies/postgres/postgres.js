@@ -1,16 +1,16 @@
-const ICrud = require('./interfaces/interfaceCrud')
+const ICrud = require('../interfaces/interfaceCrud')
 const Sequelize = require('sequelize')
 
 class Postgres extends ICrud {
-    constructor(){
+    constructor(connection, schema){
         super()
-        this._driver = null
-        this._herois = null
+        this._connection = connection
+        this._schema = schema
     }
 
     async isConnected(){
         try {
-            await this._driver.authenticate()
+            await this._connection.authenticate()
             return true
         } catch (error) {
             console.log('fail!', error)
@@ -19,7 +19,7 @@ class Postgres extends ICrud {
     }
 
     async defineModel() {
-        this._herois = this._driver.define('heroes', {
+        this._schema = this._connection.define('heroes', {
             id: {
                 type: Sequelize.INTEGER,
                 required: true,
@@ -39,30 +39,30 @@ class Postgres extends ICrud {
                 freezeTableName: false,
                 timestamps: false
         })
-        await this._herois.sync()
+        await this._schema.sync()
     }
 
     async create(item){
-        const { dataValues }  = await this._herois.create(item)
+        const { dataValues }  = await this._schema.create(item)
 
         return dataValues
     }
 
     async read(item = {}) {
-       return this._herois.findAll({ where: item, raw: true })
+       return this._schema.findAll({ where: item, raw: true })
     }
 
     async update(id, item){
-        return this._herois.update(item, { where: {id: id}})
+        return this._schema.update(item, { where: {id: id}})
     }
 
     async delete(id){
         const query = id? { id } : {}
-        return this._herois.destroy({where: query})
+        return this._schema.destroy({where: query})
     }
     
     async connect() {
-        this._driver = new Sequelize(
+        this._connection = new Sequelize(
             'heroes',
             'patriciaClares',
             'minhasenhasecreta', 
