@@ -19,9 +19,9 @@ class Postgres extends ICrud {
         }
     }
 
-    async defineModel(connection, schema) {
+    static async defineModel(connection, schema) {
         const model = connection.define(schema.name, schema.schema, schema.options)
-        await this._schema.sync()
+        await model.sync()
         return model
     }
 
