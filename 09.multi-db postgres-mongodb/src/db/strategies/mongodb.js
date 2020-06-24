@@ -57,11 +57,7 @@ class MongoDB extends ICrud{
     }
 
     async create(item){
-        const resultCadastrar = await model.create({
-            nome: 'Batman',
-            poder: 'Dinheiro'
-        })
-        console.log('resultCadastrar', resultCadastrar)    
+       return this._herois.create(item)
     }
 
 }
